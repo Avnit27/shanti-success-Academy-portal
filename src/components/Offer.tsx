@@ -51,6 +51,11 @@ const Offer = () => {
                         <div className="text-3xl font-bold text-green-500">FREE</div>
                         <div className="text-sm text-gray-600">Demo</div>
                       </div>
+                      <div className="text-4xl">+</div>
+                      <div className="text-center">
+                        <div className="text-3xl font-bold text-blue-500">FREE</div>
+                        <div className="text-sm text-gray-600">Consultancy</div>
+                      </div>
                     </div>
                   </div>
                   
@@ -65,13 +70,13 @@ const Offer = () => {
                       onClick={scrollToContact}
                       className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
                     >
-                      Claim Your Offer Now! 🚀
+                      Store 🛒
                     </Button>
                   </div>
                 </div>
                 
                 <div className="mt-8 pt-8 border-t border-gray-200">
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                  <div className="grid grid-cols-1 md:grid-cols-4 gap-4 text-center">
                     <div className="flex items-center justify-center space-x-2">
                       <span className="text-green-500 text-xl">✅</span>
                       <span className="text-gray-700">No Hidden Charges</span>
@@ -83,6 +88,10 @@ const Offer = () => {
                     <div className="flex items-center justify-center space-x-2">
                       <span className="text-green-500 text-xl">✅</span>
                       <span className="text-gray-700">Proven Results</span>
+                    </div>
+                    <div className="flex items-center justify-center space-x-2">
+                      <span className="text-green-500 text-xl">✅</span>
+                      <span className="text-gray-700">Free Consultancy</span>
                     </div>
                   </div>
                 </div>

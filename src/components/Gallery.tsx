@@ -1,8 +1,13 @@
 
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 const Gallery = () => {
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+
   const classImages = [
     {
       id: 1,
@@ -54,6 +59,22 @@ const Gallery = () => {
     }
   ];
 
+  const scrollLeft = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+    }
+  };
+
+  const scrollRight = () => {
+    if (scrollContainerRef.current) {
+      scrollContainerRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+    }
+  };
+
+  const toggleAutoScroll = () => {
+    setIsAutoScrolling(!isAutoScrolling);
+  };
+
   return (
     <section id="gallery" className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 overflow-hidden">
       <div className="container mx-auto px-4">
@@ -66,21 +87,33 @@ const Gallery = () => {
           </p>
         </div>
 
+        {/* Controls */}
+        <div className="flex justify-center items-center gap-4 mb-8">
+          <Button onClick={scrollLeft} variant="outline" size="icon">
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button onClick={toggleAutoScroll} variant="outline" className="flex items-center gap-2">
+            {isAutoScrolling ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
+            {isAutoScrolling ? 'Pause' : 'Play'}
+          </Button>
+          <Button onClick={scrollRight} variant="outline" size="icon">
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+
         {/* Scrolling Cards Container */}
         <div className="relative">
-          <div className="flex overflow-hidden">
-            <div className="flex animate-scroll-left gap-6">
+          <div className="overflow-hidden">
+            <div 
+              ref={scrollContainerRef}
+              className={`flex gap-6 ${isAutoScrolling ? 'animate-scroll-left' : ''}`}
+              style={{ width: 'max-content' }}
+            >
               {/* First set of cards */}
-              {classImages.map((image, index) => (
+              {classImages.map((image) => (
                 <Card 
                   key={`first-${image.id}`}
-                  className={`flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm ${
-                    index === 3 || index === 4 ? 'transform scale-110 z-10' : ''
-                  }`}
-                  style={{ 
-                    width: index === 3 || index === 4 ? '320px' : '280px',
-                    height: index === 3 || index === 4 ? '400px' : '360px'
-                  }}
+                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-80 h-96"
                 >
                   <CardContent className="p-0 h-full">
                     <div className="relative h-full overflow-hidden rounded-lg">
@@ -100,16 +133,10 @@ const Gallery = () => {
               ))}
               
               {/* Duplicate set for infinite loop */}
-              {classImages.map((image, index) => (
+              {classImages.map((image) => (
                 <Card 
                   key={`second-${image.id}`}
-                  className={`flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm ${
-                    index === 3 || index === 4 ? 'transform scale-110 z-10' : ''
-                  }`}
-                  style={{ 
-                    width: index === 3 || index === 4 ? '320px' : '280px',
-                    height: index === 3 || index === 4 ? '400px' : '360px'
-                  }}
+                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-80 h-96"
                 >
                   <CardContent className="p-0 h-full">
                     <div className="relative h-full overflow-hidden rounded-lg">
