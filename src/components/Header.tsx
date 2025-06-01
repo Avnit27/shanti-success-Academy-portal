@@ -35,8 +35,12 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center space-x-3">
-            <div className="w-12 h-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-xl">🕉</span>
+            <div className="w-12 h-12 rounded-xl overflow-hidden shadow-lg">
+              <img 
+                src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?w=48&h=48&fit=crop&crop=center" 
+                alt="Shanti Success Academy Logo" 
+                className="w-full h-full object-cover"
+              />
             </div>
             <div>
               <h1 className="font-bold text-xl text-gray-800 font-poppins">
@@ -48,7 +52,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex space-x-8">
-            {['home', 'about', 'courses', 'features', 'contact'].map((item) => (
+            {['home', 'about', 'courses', 'testimonials', 'features', 'contact'].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item)}
@@ -87,7 +91,7 @@ const Header = () => {
         {isMobileMenuOpen && (
           <div className="md:hidden mt-4 p-4 bg-white/95 backdrop-blur-lg rounded-lg shadow-lg border border-gray-200">
             <nav className="flex flex-col space-y-3">
-              {['home', 'about', 'courses', 'features', 'contact'].map((item) => (
+              {['home', 'about', 'courses', 'testimonials', 'features', 'contact'].map((item) => (
                 <button
                   key={item}
                   onClick={() => scrollToSection(item)}

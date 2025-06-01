@@ -2,6 +2,7 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 const Courses = () => {
   const courses = [
@@ -55,8 +56,13 @@ const Courses = () => {
     }
   ];
 
+  const handleSpecialOffersClick = () => {
+    // This will redirect to your books website
+    window.open('https://your-books-website.com', '_blank');
+  };
+
   return (
-    <section id="courses" className="py-20 bg-white">
+    <section id="courses" className="py-20 bg-white relative">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16 animate-on-scroll">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-poppins">
@@ -98,6 +104,16 @@ const Courses = () => {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Animated Special Offers Button */}
+        <div className="fixed bottom-8 right-8 z-40">
+          <Button
+            onClick={handleSpecialOffersClick}
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 animate-pulse hover:animate-bounce text-lg font-bold"
+          >
+            📚 Special Offers on Books!
+          </Button>
         </div>
 
         <div className="text-center mt-12 animate-on-scroll">

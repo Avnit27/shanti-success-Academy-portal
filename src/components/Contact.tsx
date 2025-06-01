@@ -35,6 +35,11 @@ const Contact = () => {
     { name: "Admission Process", action: "tel:+919324714072" }
   ];
 
+  const handleFeedbackClick = () => {
+    // Redirect to Google Forms
+    window.open('https://forms.google.com/your-feedback-form-link', '_blank');
+  };
+
   return (
     <section id="contact" className="py-20 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4">
@@ -76,7 +81,7 @@ const Contact = () => {
         </div>
 
         {/* Quick Actions */}
-        <div className="animate-on-scroll">
+        <div className="animate-on-scroll mb-12">
           <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-0 shadow-lg">
             <CardHeader className="text-center">
               <CardTitle className="text-2xl font-bold text-gray-800 font-poppins">
@@ -101,8 +106,49 @@ const Contact = () => {
           </Card>
         </div>
 
+        {/* QR Code and Feedback Form Section */}
+        <div className="grid md:grid-cols-2 gap-8 mb-12 animate-on-scroll">
+          {/* QR Code Section */}
+          <div className="text-center">
+            <div className="inline-block bg-white p-8 rounded-2xl shadow-lg">
+              <h4 className="text-xl font-bold text-gray-800 mb-4 font-poppins">
+                📲 Scan to Know More
+              </h4>
+              <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
+                <span className="text-gray-500 text-sm">QR Code</span>
+              </div>
+              <p className="text-gray-600 mt-4 text-sm">
+                Scan with your phone camera for instant access
+              </p>
+            </div>
+          </div>
+
+          {/* Feedback Form Card */}
+          <div className="text-center">
+            <Card className="bg-gradient-to-r from-green-50 to-blue-50 border-0 shadow-lg hover:shadow-xl transition-all duration-300">
+              <CardHeader className="text-center">
+                <div className="text-4xl mb-4">📝</div>
+                <CardTitle className="text-xl font-bold text-gray-800 font-poppins">
+                  Share Your Feedback
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="text-center">
+                <p className="text-gray-600 mb-6">
+                  Help us improve by sharing your experience and suggestions
+                </p>
+                <Button 
+                  onClick={handleFeedbackClick}
+                  className="bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white px-6 py-3 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 w-full"
+                >
+                  📝 Give Feedback
+                </Button>
+              </CardContent>
+            </Card>
+          </div>
+        </div>
+
         {/* Call to Action */}
-        <div className="text-center mt-12 animate-on-scroll">
+        <div className="text-center animate-on-scroll">
           <div className="bg-gradient-to-r from-orange-400 to-red-500 text-white p-8 rounded-3xl shadow-xl">
             <h3 className="text-3xl font-bold mb-4 font-poppins">
               🚀 Ready to Excel in Your Studies?
@@ -116,21 +162,6 @@ const Contact = () => {
             >
               📞 Call Now: 9324714072
             </Button>
-          </div>
-        </div>
-
-        {/* QR Code Section */}
-        <div className="text-center mt-12 animate-on-scroll">
-          <div className="inline-block bg-white p-8 rounded-2xl shadow-lg">
-            <h4 className="text-xl font-bold text-gray-800 mb-4 font-poppins">
-              📲 Scan to Know More
-            </h4>
-            <div className="w-32 h-32 bg-gray-200 rounded-lg mx-auto flex items-center justify-center">
-              <span className="text-gray-500 text-sm">QR Code</span>
-            </div>
-            <p className="text-gray-600 mt-4 text-sm">
-              Scan with your phone camera for instant access
-            </p>
           </div>
         </div>
       </div>
