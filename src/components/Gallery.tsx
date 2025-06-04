@@ -76,20 +76,27 @@ const Gallery = () => {
     return () => clearInterval(interval);
   }, [isPaused]);
 
-  const [visibleCard, setVisibleCard] = useState<number | null>(null);
+  const [visibleCards, setVisibleCards] = useState<Set<number>>(new Set());
 
   useEffect(() => {
     const observerOptions = {
-      threshold: 0.5,
+      threshold: 0.3,
       rootMargin: '0px'
     };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const cardId = parseInt(entry.target.getAttribute('data-card-id') || '0');
-          setVisibleCard(cardId);
-        }
+        const cardId = parseInt(entry.target.getAttribute('data-card-id') || '0');
+        
+        setVisibleCards(prev => {
+          const newSet = new Set(prev);
+          if (entry.isIntersecting) {
+            newSet.add(cardId);
+          } else {
+            newSet.delete(cardId);
+          }
+          return newSet;
+        });
       });
     }, observerOptions);
 
@@ -218,9 +225,13 @@ const Gallery = () => {
                   {/* Always visible content */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                     <h3 className="text-lg font-bold mb-1 font-poppins">{image.title}</h3>
-                    {visibleCard === image.id && (
-                      <p className="text-sm leading-relaxed animate-fade-in">{image.description}</p>
-                    )}
+                    <div className={`transition-all duration-500 overflow-hidden ${
+                      visibleCards.has(image.id) 
+                        ? 'max-h-20 opacity-100' 
+                        : 'max-h-0 opacity-0'
+                    }`}>
+                      <p className="text-sm leading-relaxed">{image.description}</p>
+                    </div>
                   </div>
                 </div>
               </CardContent>

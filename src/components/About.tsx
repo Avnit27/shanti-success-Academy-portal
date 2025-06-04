@@ -26,24 +26,19 @@ const About = () => {
         <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
           {/* Content */}
           <div className="animate-on-scroll">
-            <h3 className="text-3xl font-bold text-gray-800 mb-6 font-poppins">
+            <h3 className="text-3xl font-bold text-gray-800 mb-6 font-poppins text-center">
               Our Mission & Vision
             </h3>
-            <div className="space-y-4 text-gray-700 text-lg leading-relaxed">
+            <div className="text-gray-700 text-lg leading-relaxed text-center">
               <p>
                 At Shanti Success Academy, we believe that every student has the potential 
                 to excel. Our mission is to unlock that potential through innovative teaching 
-                methods, personalized attention, and unwavering support.
-              </p>
-              <p>
-                We specialize in coaching students from 6th to 12th grade across multiple 
-                boards (SSC, CBSE) and prepare them for competitive exams like JEE, NEET, 
-                and MHT-CET with proven strategies and expert guidance.
-              </p>
-              <p>
-                Our vision is to be the most trusted educational institution in the region, 
-                known for producing confident, successful students who are well-prepared 
-                for their future endeavors.
+                methods, personalized attention, and unwavering support. We specialize in 
+                coaching students from 6th to 12th grade across multiple boards (SSC, CBSE) 
+                and prepare them for competitive exams like JEE, NEET, and MHT-CET with proven 
+                strategies and expert guidance. Our vision is to be the most trusted educational 
+                institution in the region, known for producing confident, successful students 
+                who are well-prepared for their future endeavors.
               </p>
             </div>
           </div>
