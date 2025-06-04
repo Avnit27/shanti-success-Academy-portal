@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Button } from '@/components/ui/button';
+import { ShoppingCart } from 'lucide-react';
 
 const Hero = () => {
   const scrollToSection = (sectionId: string) => {
@@ -8,6 +9,10 @@ const Hero = () => {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  };
+
+  const handleCartClick = () => {
+    window.open('https://your-books-website.com', '_blank');
   };
 
   return (
@@ -66,6 +71,36 @@ const Hero = () => {
             </div>
           </div>
         </div>
+      </div>
+
+      {/* Cart Button - Responsive Design */}
+      <div className="fixed bottom-8 right-8 z-40">
+        {/* Mobile: Circular with icon only */}
+        <Button
+          onClick={handleCartClick}
+          className="md:hidden bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white w-16 h-16 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 flex items-center justify-center"
+        >
+          <div className="relative">
+            <ShoppingCart className="w-6 h-6" />
+            <div className="absolute -top-2 -right-2 bg-white text-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              📚
+            </div>
+          </div>
+        </Button>
+
+        {/* Desktop: With text */}
+        <Button
+          onClick={handleCartClick}
+          className="hidden md:flex bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110 items-center gap-2"
+        >
+          <div className="relative">
+            <ShoppingCart className="w-6 h-6" />
+            <div className="absolute -top-2 -right-2 bg-white text-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+              📚
+            </div>
+          </div>
+          <span className="font-semibold">Books Store</span>
+        </Button>
       </div>
 
       {/* Scroll indicator */}

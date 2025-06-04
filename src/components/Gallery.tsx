@@ -204,10 +204,10 @@ const Gallery = () => {
             <Card 
               key={`mobile-${image.id}`}
               data-card-id={image.id}
-              className="mobile-gallery-card border-0 shadow-lg bg-white/90 backdrop-blur-sm"
+              className="mobile-gallery-card border-0 shadow-lg bg-white/90 backdrop-blur-sm overflow-hidden"
             >
               <CardContent className="p-0 relative">
-                <div className="relative h-64 overflow-hidden rounded-lg">
+                <div className="relative h-64 overflow-hidden">
                   <img 
                     src={image.image} 
                     alt={image.title}

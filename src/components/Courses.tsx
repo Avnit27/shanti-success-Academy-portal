@@ -2,8 +2,6 @@
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { ShoppingCart } from 'lucide-react';
 
 const Courses = () => {
   const courses = [
@@ -56,10 +54,6 @@ const Courses = () => {
       bgGradient: "from-indigo-50 to-blue-50"
     }
   ];
-
-  const handleCartClick = () => {
-    window.open('https://your-books-website.com', '_blank');
-  };
 
   return (
     <section id="courses" className="py-20 bg-white relative">
@@ -137,21 +131,6 @@ const Courses = () => {
               </div>
             </div>
           ))}
-        </div>
-
-        {/* Cart Button for Books */}
-        <div className="fixed bottom-8 right-8 z-40">
-          <Button
-            onClick={handleCartClick}
-            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110"
-          >
-            <div className="relative">
-              <ShoppingCart className="w-6 h-6" />
-              <div className="absolute -top-2 -right-2 bg-white text-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
-                📚
-              </div>
-            </div>
-          </Button>
         </div>
 
         <div className="text-center mt-12 animate-on-scroll">
