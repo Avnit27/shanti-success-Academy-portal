@@ -11,7 +11,7 @@ const Hero = () => {
   };
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section id="home" className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-0">
       {/* Background with gradient */}
       <div className="absolute inset-0 bg-gradient-to-br from-blue-50 via-purple-50 to-green-50"></div>
       
@@ -25,19 +25,19 @@ const Hero = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center max-w-5xl mx-auto">
           {/* Main Title */}
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-6 animate-fade-in">
             <span className="text-gradient font-poppins">Shanti Success</span>
             <br />
             <span className="text-gray-800 font-poppins">Academy</span>
           </h1>
 
           {/* Tagline */}
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 font-medium animate-fade-in font-poppins italic" style={{ animationDelay: '0.2s' }}>
+          <p className="text-lg sm:text-xl md:text-2xl text-gray-600 mb-8 font-medium animate-fade-in font-poppins italic" style={{ animationDelay: '0.2s' }}>
             Keep Learning, Keep Growing
           </p>
 
           {/* Description */}
-          <p className="text-lg md:text-xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.4s' }}>
+          <p className="text-base sm:text-lg md:text-xl text-gray-700 mb-12 max-w-3xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '0.4s' }}>
             Expert coaching for classes 6th-12th, JEE, NEET & MHT-CET. 
             Experience affordable quality education with concept-focused learning and trusted results.
           </p>
@@ -46,14 +46,14 @@ const Hero = () => {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
             <Button 
               onClick={() => scrollToSection('contact')}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105"
             >
               🎁 Free Demo Lecture
             </Button>
             <Button 
               onClick={() => scrollToSection('courses')}
               variant="outline"
-              className="border-2 border-gray-300 hover:border-blue-500 text-gray-700 hover:text-blue-600 px-8 py-4 text-lg rounded-full transition-all duration-300 hover:scale-105"
+              className="border-2 border-gray-300 hover:border-blue-500 text-gray-700 hover:text-blue-600 px-6 sm:px-8 py-3 sm:py-4 text-base sm:text-lg rounded-full transition-all duration-300 hover:scale-105"
             >
               Explore Courses
             </Button>
@@ -61,8 +61,8 @@ const Hero = () => {
 
           {/* Special Offer Badge */}
           <div className="mt-12 animate-fade-in" style={{ animationDelay: '0.8s' }}>
-            <div className="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white px-6 py-3 rounded-full shadow-lg animate-pulse">
-              <span className="font-bold">🎉 15% OFF - Enroll Before 30th June!</span>
+            <div className="inline-block bg-gradient-to-r from-orange-400 to-red-500 text-white px-4 sm:px-6 py-3 rounded-full shadow-lg animate-pulse">
+              <span className="font-bold text-sm sm:text-base">🎉 15% OFF - Enroll Before 30th June!</span>
             </div>
           </div>
         </div>

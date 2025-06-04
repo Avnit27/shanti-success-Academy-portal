@@ -54,7 +54,8 @@ const Features = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Desktop Cards Layout */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <Card 
               key={index} 
@@ -73,6 +74,29 @@ const Features = () => {
                 </p>
               </CardContent>
             </Card>
+          ))}
+        </div>
+
+        {/* Mobile Strip Layout */}
+        <div className="md:hidden space-y-4">
+          {features.map((feature, index) => (
+            <div 
+              key={index}
+              className="flex items-start p-4 rounded-xl shadow-lg bg-white animate-on-scroll"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className={`w-12 h-12 bg-gradient-to-r ${feature.gradient} rounded-full flex items-center justify-center shadow-lg flex-shrink-0 mr-4`}>
+                <span className="text-xl">{feature.icon}</span>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-800 mb-2 font-poppins">
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-gray-600 leading-relaxed">
+                  {feature.description}
+                </p>
+              </div>
+            </div>
           ))}
         </div>
 

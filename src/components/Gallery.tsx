@@ -4,7 +4,6 @@ import { Card, CardContent } from '@/components/ui/card';
 
 const Gallery = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [isPaused, setIsPaused] = useState(false);
 
   const classImages = [
@@ -77,6 +76,31 @@ const Gallery = () => {
     return () => clearInterval(interval);
   }, [isPaused]);
 
+  const [visibleCard, setVisibleCard] = useState<number | null>(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.5,
+      rootMargin: '0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const cardId = parseInt(entry.target.getAttribute('data-card-id') || '0');
+          setVisibleCard(cardId);
+        }
+      });
+    }, observerOptions);
+
+    const cards = document.querySelectorAll('.mobile-gallery-card');
+    cards.forEach((card) => observer.observe(card));
+
+    return () => {
+      cards.forEach((card) => observer.unobserve(card));
+    };
+  }, []);
+
   const handleMouseEnter = () => {
     setIsPaused(true);
   };
@@ -97,12 +121,12 @@ const Gallery = () => {
           </p>
         </div>
 
-        {/* Scrolling Cards Container */}
-        <div className="relative">
+        {/* Desktop Scrolling Cards */}
+        <div className="hidden md:block relative">
           <div className="overflow-hidden">
             <div 
               ref={scrollContainerRef}
-              className="flex gap-4 md:gap-6 cursor-pointer"
+              className="flex gap-6 cursor-pointer"
               style={{ width: 'max-content' }}
               onMouseEnter={handleMouseEnter}
               onMouseLeave={handleMouseLeave}
@@ -111,7 +135,7 @@ const Gallery = () => {
               {classImages.map((image) => (
                 <Card 
                   key={`first-${image.id}`}
-                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-64 md:w-80 h-72 md:h-96 group"
+                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-80 h-96 group"
                 >
                   <CardContent className="p-0 h-full relative">
                     <div className="relative h-full overflow-hidden rounded-lg">
@@ -123,15 +147,15 @@ const Gallery = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                       
                       {/* Default content - always visible */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
-                        <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 font-poppins">{image.title}</h3>
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                        <h3 className="text-xl font-bold mb-2 font-poppins">{image.title}</h3>
                       </div>
                       
                       {/* Hover content - shows on hover */}
-                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 md:p-6">
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
                         <div className="text-center text-white">
-                          <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 font-poppins">{image.title}</h3>
-                          <p className="text-sm md:text-base leading-relaxed">{image.description}</p>
+                          <h3 className="text-2xl font-bold mb-4 font-poppins">{image.title}</h3>
+                          <p className="text-base leading-relaxed">{image.description}</p>
                         </div>
                       </div>
                     </div>
@@ -143,7 +167,7 @@ const Gallery = () => {
               {classImages.map((image) => (
                 <Card 
                   key={`second-${image.id}`}
-                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-64 md:w-80 h-72 md:h-96 group"
+                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-80 h-96 group"
                 >
                   <CardContent className="p-0 h-full relative">
                     <div className="relative h-full overflow-hidden rounded-lg">
@@ -155,15 +179,15 @@ const Gallery = () => {
                       <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
                       
                       {/* Default content - always visible */}
-                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
-                        <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 font-poppins">{image.title}</h3>
+                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                        <h3 className="text-xl font-bold mb-2 font-poppins">{image.title}</h3>
                       </div>
                       
                       {/* Hover content - shows on hover */}
-                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 md:p-6">
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-6">
                         <div className="text-center text-white">
-                          <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 font-poppins">{image.title}</h3>
-                          <p className="text-sm md:text-base leading-relaxed">{image.description}</p>
+                          <h3 className="text-2xl font-bold mb-4 font-poppins">{image.title}</h3>
+                          <p className="text-base leading-relaxed">{image.description}</p>
                         </div>
                       </div>
                     </div>
@@ -172,6 +196,36 @@ const Gallery = () => {
               ))}
             </div>
           </div>
+        </div>
+
+        {/* Mobile Vertical Cards */}
+        <div className="md:hidden space-y-6">
+          {classImages.map((image) => (
+            <Card 
+              key={`mobile-${image.id}`}
+              data-card-id={image.id}
+              className="mobile-gallery-card border-0 shadow-lg bg-white/90 backdrop-blur-sm"
+            >
+              <CardContent className="p-0 relative">
+                <div className="relative h-64 overflow-hidden rounded-lg">
+                  <img 
+                    src={image.image} 
+                    alt={image.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                  
+                  {/* Always visible content */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                    <h3 className="text-lg font-bold mb-1 font-poppins">{image.title}</h3>
+                    {visibleCard === image.id && (
+                      <p className="text-sm leading-relaxed animate-fade-in">{image.description}</p>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          ))}
         </div>
 
         <div className="text-center mt-8 md:mt-12 animate-on-scroll">

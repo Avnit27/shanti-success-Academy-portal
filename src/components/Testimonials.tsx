@@ -86,8 +86,8 @@ const Testimonials = () => {
           </Card>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+        {/* Desktop Testimonials Grid */}
+        <div className="hidden md:grid md:grid-cols-2 gap-8">
           {testimonials.map((testimonial, index) => (
             <Card 
               key={index} 
@@ -116,6 +116,37 @@ const Testimonials = () => {
                 <p className="text-gray-700 italic">"{testimonial.text}"</p>
               </CardContent>
             </Card>
+          ))}
+        </div>
+
+        {/* Mobile Strip Layout */}
+        <div className="md:hidden space-y-4">
+          {testimonials.map((testimonial, index) => (
+            <div 
+              key={index}
+              className="flex items-start p-4 rounded-xl shadow-lg bg-white animate-on-scroll"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <img 
+                src={testimonial.image} 
+                alt={testimonial.name}
+                className="w-12 h-12 rounded-full object-cover shadow-lg flex-shrink-0 mr-4"
+              />
+              <div className="flex-1">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-base font-bold text-gray-800 font-poppins">
+                    {testimonial.name}
+                  </h3>
+                  <div className="flex">
+                    {[...Array(testimonial.rating)].map((_, i) => (
+                      <span key={i} className="text-yellow-400 text-sm">⭐</span>
+                    ))}
+                  </div>
+                </div>
+                <p className="text-xs text-gray-600 mb-2">{testimonial.class} | {testimonial.exam}</p>
+                <p className="text-sm text-gray-700 italic">"{testimonial.text}"</p>
+              </div>
+            </div>
           ))}
         </div>
 

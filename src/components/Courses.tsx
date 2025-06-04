@@ -3,6 +3,7 @@ import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { ShoppingCart } from 'lucide-react';
 
 const Courses = () => {
   const courses = [
@@ -56,8 +57,7 @@ const Courses = () => {
     }
   ];
 
-  const handleSpecialOffersClick = () => {
-    // This will redirect to your books website
+  const handleCartClick = () => {
     window.open('https://your-books-website.com', '_blank');
   };
 
@@ -73,7 +73,8 @@ const Courses = () => {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Desktop Cards View */}
+        <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {courses.map((course, index) => (
             <Card 
               key={index} 
@@ -106,13 +107,50 @@ const Courses = () => {
           ))}
         </div>
 
-        {/* Animated Special Offers Button */}
+        {/* Mobile Strip View */}
+        <div className="md:hidden space-y-4">
+          {courses.map((course, index) => (
+            <div 
+              key={index}
+              className={`flex items-center p-4 rounded-xl shadow-lg bg-gradient-to-r ${course.bgGradient} animate-on-scroll`}
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              <div className={`w-12 h-12 bg-gradient-to-r ${course.gradient} rounded-full flex items-center justify-center shadow-lg flex-shrink-0 mr-4`}>
+                <span className="text-xl">{course.icon}</span>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-800 mb-1 font-poppins">
+                  {course.title}
+                </h3>
+                <p className="text-sm text-gray-600 mb-2">{course.description}</p>
+                <div className="flex flex-wrap gap-1">
+                  {course.subjects.map((subject, subIndex) => (
+                    <Badge 
+                      key={subIndex} 
+                      variant="secondary" 
+                      className="bg-white/70 text-gray-700 text-xs"
+                    >
+                      {subject}
+                    </Badge>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Cart Button for Books */}
         <div className="fixed bottom-8 right-8 z-40">
           <Button
-            onClick={handleSpecialOffersClick}
-            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white px-6 py-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 animate-pulse hover:animate-bounce text-lg font-bold"
+            onClick={handleCartClick}
+            className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white p-4 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 hover:scale-110"
           >
-            📚 Special Offers on Books!
+            <div className="relative">
+              <ShoppingCart className="w-6 h-6" />
+              <div className="absolute -top-2 -right-2 bg-white text-orange-500 rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold">
+                📚
+              </div>
+            </div>
           </Button>
         </div>
 
