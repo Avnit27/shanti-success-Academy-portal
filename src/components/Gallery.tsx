@@ -1,12 +1,11 @@
 
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react';
 
 const Gallery = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
 
   const classImages = [
     {
@@ -59,46 +58,43 @@ const Gallery = () => {
     }
   ];
 
-  const scrollLeft = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: -320, behavior: 'smooth' });
-    }
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (!container || isPaused) return;
+
+    const scrollStep = 1;
+    const scrollInterval = 30;
+
+    const scroll = () => {
+      if (container.scrollLeft >= container.scrollWidth / 2) {
+        container.scrollLeft = 0;
+      } else {
+        container.scrollLeft += scrollStep;
+      }
+    };
+
+    const interval = setInterval(scroll, scrollInterval);
+    return () => clearInterval(interval);
+  }, [isPaused]);
+
+  const handleMouseEnter = () => {
+    setIsPaused(true);
   };
 
-  const scrollRight = () => {
-    if (scrollContainerRef.current) {
-      scrollContainerRef.current.scrollBy({ left: 320, behavior: 'smooth' });
-    }
-  };
-
-  const toggleAutoScroll = () => {
-    setIsAutoScrolling(!isAutoScrolling);
+  const handleMouseLeave = () => {
+    setIsPaused(false);
   };
 
   return (
-    <section id="gallery" className="py-20 bg-gradient-to-r from-blue-50 to-purple-50 overflow-hidden">
+    <section id="gallery" className="py-12 md:py-20 bg-gradient-to-r from-blue-50 to-purple-50 overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16 animate-on-scroll">
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 font-poppins">
+        <div className="text-center mb-8 md:mb-16 animate-on-scroll">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4 md:mb-6 font-poppins">
             Our <span className="text-gradient">Quality Classes</span>
           </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-4">
             Experience excellence in education through our modern facilities and expert teaching methods
           </p>
-        </div>
-
-        {/* Controls */}
-        <div className="flex justify-center items-center gap-4 mb-8">
-          <Button onClick={scrollLeft} variant="outline" size="icon">
-            <ChevronLeft className="h-4 w-4" />
-          </Button>
-          <Button onClick={toggleAutoScroll} variant="outline" className="flex items-center gap-2">
-            {isAutoScrolling ? <Pause className="h-4 w-4" /> : <Play className="h-4 w-4" />}
-            {isAutoScrolling ? 'Pause' : 'Play'}
-          </Button>
-          <Button onClick={scrollRight} variant="outline" size="icon">
-            <ChevronRight className="h-4 w-4" />
-          </Button>
         </div>
 
         {/* Scrolling Cards Container */}
@@ -106,26 +102,37 @@ const Gallery = () => {
           <div className="overflow-hidden">
             <div 
               ref={scrollContainerRef}
-              className={`flex gap-6 ${isAutoScrolling ? 'animate-scroll-left' : ''}`}
+              className="flex gap-4 md:gap-6 cursor-pointer"
               style={{ width: 'max-content' }}
+              onMouseEnter={handleMouseEnter}
+              onMouseLeave={handleMouseLeave}
             >
               {/* First set of cards */}
               {classImages.map((image) => (
                 <Card 
                   key={`first-${image.id}`}
-                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-80 h-96"
+                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-64 md:w-80 h-72 md:h-96 group"
                 >
-                  <CardContent className="p-0 h-full">
+                  <CardContent className="p-0 h-full relative">
                     <div className="relative h-full overflow-hidden rounded-lg">
                       <img 
                         src={image.image} 
                         alt={image.title}
-                        className="w-full h-2/3 object-cover transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <h3 className="text-xl font-bold mb-2 font-poppins">{image.title}</h3>
-                        <p className="text-sm opacity-90">{image.description}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                      
+                      {/* Default content - always visible */}
+                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
+                        <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 font-poppins">{image.title}</h3>
+                      </div>
+                      
+                      {/* Hover content - shows on hover */}
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 md:p-6">
+                        <div className="text-center text-white">
+                          <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 font-poppins">{image.title}</h3>
+                          <p className="text-sm md:text-base leading-relaxed">{image.description}</p>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -136,19 +143,28 @@ const Gallery = () => {
               {classImages.map((image) => (
                 <Card 
                   key={`second-${image.id}`}
-                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-80 h-96"
+                  className="flex-shrink-0 border-0 shadow-lg hover:shadow-xl transition-all duration-500 bg-white/80 backdrop-blur-sm w-64 md:w-80 h-72 md:h-96 group"
                 >
-                  <CardContent className="p-0 h-full">
+                  <CardContent className="p-0 h-full relative">
                     <div className="relative h-full overflow-hidden rounded-lg">
                       <img 
                         src={image.image} 
                         alt={image.title}
-                        className="w-full h-2/3 object-cover transition-transform duration-500 hover:scale-110"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                      <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                        <h3 className="text-xl font-bold mb-2 font-poppins">{image.title}</h3>
-                        <p className="text-sm opacity-90">{image.description}</p>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+                      
+                      {/* Default content - always visible */}
+                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-4 text-white">
+                        <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2 font-poppins">{image.title}</h3>
+                      </div>
+                      
+                      {/* Hover content - shows on hover */}
+                      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center p-4 md:p-6">
+                        <div className="text-center text-white">
+                          <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 font-poppins">{image.title}</h3>
+                          <p className="text-sm md:text-base leading-relaxed">{image.description}</p>
+                        </div>
                       </div>
                     </div>
                   </CardContent>
@@ -158,8 +174,8 @@ const Gallery = () => {
           </div>
         </div>
 
-        <div className="text-center mt-12 animate-on-scroll">
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <div className="text-center mt-8 md:mt-12 animate-on-scroll">
+          <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto px-4">
             Join thousands of successful students who have achieved their academic goals with our proven teaching methodology
           </p>
         </div>

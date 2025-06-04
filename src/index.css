@@ -1,5 +1,4 @@
 
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -134,6 +133,19 @@
     animation: scroll-left 30s linear infinite;
   }
 
+  /* Responsive text utilities */
+  .text-responsive-title {
+    @apply text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl;
+  }
+
+  .text-responsive-subtitle {
+    @apply text-lg sm:text-xl md:text-2xl lg:text-3xl;
+  }
+
+  .text-responsive-body {
+    @apply text-sm sm:text-base md:text-lg;
+  }
+
   @keyframes bounce-glow {
     0%, 20%, 50%, 80%, 100% {
       transform: translateY(0);
@@ -156,5 +168,31 @@
     100% {
       transform: translateX(-50%);
     }
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+}
+
+/* Mobile-specific improvements */
+@media (max-width: 768px) {
+  .container {
+    @apply px-4;
+  }
+  
+  /* Ensure proper spacing on mobile */
+  section {
+    @apply py-12;
+  }
+  
+  /* Responsive grid fixes */
+  .grid-responsive {
+    @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4;
   }
 }
